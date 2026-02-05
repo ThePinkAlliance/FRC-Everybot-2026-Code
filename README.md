@@ -1,1 +1,4 @@
-the 431 every bot code!!!11!!!!1
+# Fuel motor IDs
+- **LEFT_INTAKE_LAUNCHER_MOTOR_ID** 5
+- **RIGHT_INTAKE_LAUNCHER_MOTOR_ID** 6
+- **INDEXER_MOTOR_ID** 8
