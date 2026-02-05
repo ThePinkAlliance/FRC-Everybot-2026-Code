@@ -1,3 +1,5 @@
 # FRC--Everybot-2026-Code
 
-Coming soon
+Version 1.0.1
+
+Documentation for code coming soon
