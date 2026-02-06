@@ -24,6 +24,7 @@ public class ClimbUp extends Command {
   public void initialize() {
     climberSubsystem
         .setClimber(CLIMBER_MOTOR_UP_PERCENT);
+
   }
 
   // Called every time the scheduler runs while the command is scheduled. This

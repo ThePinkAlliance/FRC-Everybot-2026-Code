@@ -12,33 +12,39 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.robot.Constants.ClimbConstatns.*;
 
 public class ClimberSubsystem extends SubsystemBase {
-  private final SparkMax climberMotor;
+    private final SparkMax climberMotor;
 
-  /** Creates a new CANBallSubsystem. */
-  public ClimberSubsystem() {
-    // create brushed motors for each of the motors on the launcher mechanism
-    climberMotor = new SparkMax(CLIMBER_MOTOR_ID, MotorType.kBrushed);
+    private int climberCounter = 0;
+    private boolean isClimbing = false;
 
-    // create the configuration for the climb moter, set a current limit and apply
-    // the config to the controller
-    SparkMaxConfig climbConfig = new SparkMaxConfig();
-    climbConfig.smartCurrentLimit(CLIMBER_MOTOR_CURRENT_LIMIT);
-    climbConfig.idleMode(IdleMode.kBrake);
-    climberMotor.configure(climbConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-  }
+    public ClimberSubsystem() {
+        climberMotor = new SparkMax(CLIMBER_MOTOR_ID, MotorType.kBrushed);
 
-  // A method to set the percentage of the climber
-  public void setClimber(double power) {
-    climberMotor.set(power);
-  }
+        SparkMaxConfig climbConfig = new SparkMaxConfig();
+        climbConfig.smartCurrentLimit(CLIMBER_MOTOR_CURRENT_LIMIT);
+        climbConfig.idleMode(IdleMode.kBrake);
+        climberMotor.configure(climbConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    }
 
-  // A method to stop the climber
-  public void stop() {
-    climberMotor.set(0);
-  }
+    public void setClimber(double power) {
+        isClimbing = true;
+        climberCounter = 100; // number of periodic cycles to run motor
+        climberMotor.set(power);
+    }
 
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-  }
+    public void stop() {
+        climberMotor.set(0);
+        isClimbing = false;
+    }
+
+    @Override
+    public void periodic() {
+        if (isClimbing) {
+            climberCounter--;
+            if (climberCounter <= 0) {
+                stop();
+            }
+        }
+    }
 }
+
